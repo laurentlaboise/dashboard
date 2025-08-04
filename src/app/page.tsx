@@ -1,40 +1,27 @@
-"use client";
-import React, { useState, useEffect } from 'react';
-import Sidebar from './Sidebar';      // Correct capitalization
-import Navbar from './Navbar';        // Correct capitalization
-import MainContent from './MainContent';  // Correct capitalization
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-export default function Home() {
-  const [isSidebarHidden, setIsSidebarHidden] = useState(false);
+const inter = Inter({ subsets: ["latin"] });
 
-  const toggleSidebar = () => {
-    setIsSidebarHidden(!isSidebarHidden);
-  };
+export const metadata: Metadata = {
+  title: "Admin Dashboard",
+  description: "A modern admin dashboard built with Next.js",
+};
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsSidebarHidden(true);
-      } else {
-        setIsSidebarHidden(false);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <>
-      <Sidebar isHidden={isSidebarHidden} />
-      <section id="content">
-        <Navbar onToggleSidebar={toggleSidebar} />
-        <MainContent />
-      </section>
-    </>
+    <html lang="en">
+      <head>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></link>
+      </head>
+      <body className={inter.className}>
+        {children}
+      </body>
+    </html>
   );
 }
