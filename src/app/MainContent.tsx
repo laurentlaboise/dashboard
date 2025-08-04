@@ -1,5 +1,5 @@
-//typescriptreact
-import Reanpmct, { useState } from 'react';
+"use client";
+import React, { useState } from 'react'; // FIX: Corrected "Reanpmct" to "React"
 
 // Define a type for order data
 interface Order {
@@ -36,12 +36,13 @@ const initialTodos: Todo[] = [
     { id: 5, text: 'Count Profit Analytics', progress: 10, completed: false },
 ];
 
+
 const MainContent: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('all');
-    const [todos, setTodos] = useState<Todo[]>(initialTodos); // Using dummy data
-    const [todoFilter, setTodoFilter] = useState<'all' | 'completed' | 'pending'>('all'); // State to manage todo filter
-    const [orders] = useState<Order[]>(initialOrders); // Using dummy data
+    const [todos, setTodos] = useState<Todo[]>(initialTodos);
+    const [todoFilter, setTodoFilter] = useState<'all' | 'completed' | 'pending'>('all');
+    const [orders] = useState<Order[]>(initialOrders);
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
@@ -50,21 +51,9 @@ const MainContent: React.FC = () => {
     const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setFilterStatus(event.target.value);
     };
-
-    const handleTodoMenuClick = (todoId: number) => {
-        // This logic needs to be adjusted to work with React state.
-        // A common approach is to have a state that holds the ID of the currently open menu.
-        // Since the request is focused on filtering, we'll leave the menu functionality as is for now
-        // and focus on filtering.
-    };
-
+    
     const handleTodoFilterChange = (status: 'all' | 'completed' | 'pending') => {
         setTodoFilter(status);
-    };
-
-    const handleEditTodo = (todoId: number) => {
-        console.log(`Edit clicked for todo ${todoId}`);
-        // Implement edit functionality (e.g., opening a modal)
     };
 
     const handleDeleteTodo = (todoId: number) => {
@@ -88,13 +77,9 @@ const MainContent: React.FC = () => {
                 <div className="left">
                     <h1>Dashboard</h1>
                     <ul className="breadcrumb">
-                        <li>
-                            <a href="#">Dashboard</a>
-                        </li>
+                        <li><a href="#">Dashboard</a></li>
                         <li><i className='bx bx-chevron-right' ></i></li>
-                        <li>
-                            <a className="active" href="#">Home</a>
-                        </li>
+                        <li><a className="active" href="#">Home</a></li>
                     </ul>
                 </div>
                 <a href="#" className="btn-download">
@@ -102,32 +87,20 @@ const MainContent: React.FC = () => {
                     <span className="text">Download PDF</span>
                 </a>
             </div>
-
             <ul className="box-info">
                 <li>
                     <i className='bx bxs-calendar-check' ></i>
-                    <span className="text">
-                        <h3>1020</h3>
-                        <p>New Order</p>
-                    </span>
+                    <span className="text"><h3>1020</h3><p>New Order</p></span>
                 </li>
                 <li>
                     <i className='bx bxs-group' ></i>
-                    <span className="text">
-                        <h3>2834</h3>
-                        <p>Visitors</p>
-                    </span>
+                    <span className="text"><h3>2834</h3><p>Visitors</p></span>
                 </li>
                 <li>
                     <i className='bx bxs-dollar-circle' ></i>
-                    <span className="text">
-                        <h3>N$2543.00</h3>
-                        <p>Total Sales</p>
-                    </span>
+                    <span className="text"><h3>N$2543.00</h3><p>Total Sales</p></span>
                 </li>
             </ul>
-
-
             <div className="table-data">
                 <div className="order">
                     <div className="head">
@@ -135,46 +108,32 @@ const MainContent: React.FC = () => {
                         <i className='bx bx-search' ></i>
                         <i className='bx bx-filter' ></i>
                     </div>
-                    <div className="order-filters">
-                        <input type="text" id="searchUser" placeholder="Search by user..." value={searchTerm} onChange={handleSearchChange} />
-                        <select id="filterStatus" value={filterStatus} onChange={handleFilterChange}>
-                            <option value="all">All</option>
-                            <option value="completed">Completed</option>
-                            <option value="pending">Pending</option>
-                            <option value="process">Process</option>
-                        </select>
-                    </div>
-                   <table>
-                      <thead>
-                        <tr>
-                          <th>İmg</th>
-                          <th>User</th>
-                          <th>Date Order</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>İmg</th>
+                                <th>User</th>
+                                <th>Date Order</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                          {orders
-                            .filter(order => filterStatus === 'all' || order.status === filterStatus)
-                            .filter(order =>
-                              order.user.toLowerCase().includes(searchTerm.toLowerCase()) || order.email.toLowerCase().includes(searchTerm.toLowerCase())
-                            )
-                            .map(order => (
-                                <tr key={order.id}>
-                                <td>
-                                  <img src={order.img} alt="User Image" />
-                                </td>
-                                <td>
-                                  <span>{order.user}</span>
-                                  <p>{order.email}</p>
+                            {orders
+                                .filter(order => filterStatus === 'all' || order.status === filterStatus)
+                                .filter(order =>
+                                    order.user.toLowerCase().includes(searchTerm.toLowerCase()) || order.email.toLowerCase().includes(searchTerm.toLowerCase())
+                                )
+                                .map(order => (
+                                    <tr key={order.id}>
+                                        <td><img src={order.img} alt="User Image" /></td>
+                                        <td>
+                                            <span>{order.user}</span>
+                                            <p>{order.email}</p>
                                         </td>
                                         <td>{order.date}</td>
-                                        <td><span className={`status ${order.status}`}>{order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span>
-
-                                        </td>
+                                        <td><span className={`status ${order.status}`}>{order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span></td>
                                     </tr>
                                 ))}
-                            {/* Add static rows back if needed, but it's better to use dummy data and map */}
                         </tbody>
                     </table>
                 </div>
@@ -183,32 +142,15 @@ const MainContent: React.FC = () => {
                         <h3>Todos</h3>
                         <i className='bx bx-plus icon'></i>
                     </div>
-                    <div className="todo-filters">
-                        <button onClick={() => handleTodoFilterChange('all')}>All</button>
-                        <button onClick={() => handleTodoFilterChange('completed')} className={todoFilter === 'completed' ? 'active completed' : 'completed'}>Completed</button>
-                        <button onClick={() => handleTodoFilterChange('pending')} className={todoFilter === 'pending' ? 'active pending' : 'pending'}>Pending</button>
-                    </div>
                     <ul className="todo-list">
                         {filteredTodos.map(todo => (
-                            <li
-                                key={todo.id}
-                                className={`${todo.completed ? 'completed' : 'not-completed'}`}
-                                style={{ '--progress-width': `${todo.progress}%` } as React.CSSProperties}
-                            >
-                                <span className="progress-text">{`%${todo.progress}`}</span>
+                            <li key={todo.id} className={`${todo.completed ? 'completed' : 'not-completed'}`}>
                                 <p>{todo.text}</p>
-                                <i className='bx bx-dots-vertical-rounded menu-icon' onClick={() => handleTodoMenuClick(todo.id)}>
-                                    <dl className="content-menu">
-                                        <dt className="menu-item"><a href="#" onClick={() => handleEditTodo(todo.id)}>Edit</a></dt>
-                                        <dt className="menu-item"><a href="#" onClick={() => handleDeleteTodo(todo.id)}>Delete</a></dt>
-                                        <dt className="menu-item"><a href="#" onClick={() => handleToggleTodoComplete(todo.id)}>Mark as {todo.completed ? 'Pending' : 'Completed'}</a></dt>
- </dl>
- </i>
- </li>
- ))}
- </ul>
+                                <i className='bx bx-dots-vertical-rounded menu-icon'></i>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-
             </div>
         </main>
     );
