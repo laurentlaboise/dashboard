@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js configuration options can go here.
-  // For now, we can leave it empty.
-  // This file needs to use the modern 'export default' syntax.
+  // This file must use the modern 'export default' syntax.
+  // Any Next.js specific configuration options would go inside this object.
 };
 
 export default nextConfig;
